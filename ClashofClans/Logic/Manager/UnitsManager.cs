@@ -128,7 +128,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				Pets[index].HeroId = 0;
 			else
-				Logger.Log("Pet with Id: " + petId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Pet with Id: " + petId + " doesn't exist", null, LogErrorType.ERROR);
 		}
 		public void Train(int type, int id, int count)
 		{
@@ -251,7 +251,7 @@ namespace ClashofClans.Logic.Manager
 			}
 			else
 			{
-				Logger.Log("Unit with Id: " + id + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Unit with Id: " + id + " doesn't exist", null, LogErrorType.ERROR);
 			}
 		}
 		public void RemoveSpell(int id, int cnt = 1)
@@ -265,7 +265,7 @@ namespace ClashofClans.Logic.Manager
 			}
 			else
 			{
-				Logger.Log("Spell with Id: " + id + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Spell with Id: " + id + " doesn't exist", null, LogErrorType.ERROR);
 			}
 		}
 	}

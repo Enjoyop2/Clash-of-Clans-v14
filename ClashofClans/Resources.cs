@@ -27,7 +27,8 @@ namespace ClashofClans
 
 		public static Fingerprint Fingerprint { get; set; }
 		public static Csv Csv { get; set; }
-		public static Levels Levels { get; set; }
+		public static LevelFiles Levels { get; set; }
+		public static JsonFiles Jsons { get; set; }
 
 		public static LogicGlobalChatManager ChatManager { get; set; }
 
@@ -50,7 +51,8 @@ namespace ClashofClans
 
 			Fingerprint = new Fingerprint();
 			Csv = new Csv();
-			Levels = new Levels();
+			Levels = new LevelFiles();
+			Jsons = new JsonFiles();
 
 			PlayerDb = new PlayerDb();
 			AllianceDb = new AllianceDb();

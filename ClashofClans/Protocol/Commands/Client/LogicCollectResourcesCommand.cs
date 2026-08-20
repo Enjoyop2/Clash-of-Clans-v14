@@ -34,7 +34,7 @@ namespace ClashofClans.Protocol.Commands.Client
 			{
 				Building building = buildings[index];
 
-				Logger.Log($"Collected: {building.ResourceProductionComponent.AvailableToCollect}", GetType(), Logger.ErrorLevel.Debug);
+				Logger.Log($"Collected: {building.ResourceProductionComponent.AvailableToCollect}", GetType(), LogErrorType.DEBUG);
 
 				home.ComponentManager.CollectResources(building.Data);
 			}

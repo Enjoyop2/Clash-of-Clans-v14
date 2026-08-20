@@ -58,7 +58,7 @@ namespace ClashofClans.Protocol.Commands.Client
 				if (index > -1)
 				{
 					Obstacle obstacle = obstacles[index];
-					Obstacles data = obstacle.ObstacleData;
+					LogicObstacleData data = obstacle.GetObstacleData();
 
 					obstacle.ClearingTimer = null;
 

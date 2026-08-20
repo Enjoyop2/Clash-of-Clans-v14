@@ -38,7 +38,7 @@ namespace ClashofClans.Logic
 			if (!LogicMagicMessageFactory.Messages.ContainsKey(id))
 			{
 				Logger.Log($"Message ID: {id}, V: {version}, L: {length} is not known.", GetType(),
-					Logger.ErrorLevel.Warning);
+					LogErrorType.WARNING);
 
 				Disconnect($"Message ID: {id}, V: {version}, L: {length} is not known.");
 				return;
@@ -52,7 +52,7 @@ namespace ClashofClans.Logic
 				if (message.RequiredState != CurrentState && message.RequiredState != State.NotDefinied)
 				{
 					Logger.Log($"Message {id} is not allowed in state {CurrentState.ToString()}!", GetType(),
-						Logger.ErrorLevel.Warning);
+						LogErrorType.WARNING);
 					Disconnect("Not allowed.");
 					return;
 				}
@@ -74,14 +74,14 @@ namespace ClashofClans.Logic
 				st.Stop();
 				Logger.Log($"Message {id}:{length} ({message.GetType().Name}) - ({st.ElapsedMilliseconds}ms)",
 					GetType(),
-					Logger.ErrorLevel.Debug);
+					LogErrorType.DEBUG);
 #endif
 
 				if (message.Save && CurrentState == State.Home) Player.Save();
 			}
 			catch (Exception exception)
 			{
-				Logger.Log($"Failed to process {id}, L: {length}: " + exception, GetType(), Logger.ErrorLevel.Error);
+				Logger.Log($"Failed to process {id}, L: {length}: " + exception, GetType(), LogErrorType.ERROR);
 			}
 		}
 
@@ -117,7 +117,7 @@ namespace ClashofClans.Logic
 				}
 				catch (Exception)
 				{
-					Logger.Log("Failed to close channel", GetType(), Logger.ErrorLevel.Error);
+					Logger.Log("Failed to close channel", GetType(), LogErrorType.ERROR);
 				}
 			}
 		}

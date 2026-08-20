@@ -25,7 +25,7 @@ namespace ClashofClans.Protocol.Messages.Client
 				Device.Player.Home.GameMatchmakingManager.searchTimer.Stop();
 			}
 
-			if (Device.Player.Home.Battle.GetBattleStatus())
+			if (Device.Player.Home.Battle.IsBattleStatus())
 			{
 				Device.Player.Home.Battle.EndBattle(Device.Player, Device);
 			}

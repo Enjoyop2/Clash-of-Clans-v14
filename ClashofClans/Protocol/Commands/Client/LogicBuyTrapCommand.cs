@@ -12,20 +12,21 @@ namespace ClashofClans.Protocol.Commands.Client
 {
 	public class LogicBuyTrapCommand : LogicCommand
 	{
+
+		private int _buildingData;
+		private int _x;
+		private int _y;
+
 		public LogicBuyTrapCommand(Device device, ByteBuffer buffer) : base(device, buffer)
 		{
 		}
 
-		public int BuildingData { get; set; }
-		public int X { get; set; }
-		public int Y { get; set; }
-
 		public override void Decode()
 		{
-			X = Reader.ReadInt();
-			Y = Reader.ReadInt();
+			_x = Reader.ReadInt();
+			_y = Reader.ReadInt();
 
-			BuildingData = Reader.ReadInt();
+			_buildingData = Reader.ReadInt();
 
 			base.Decode();
 		}
@@ -35,17 +36,17 @@ namespace ClashofClans.Protocol.Commands.Client
 			Home home = Device.Player.Home;
 			List<Trap> traps = home.GameObjectManager.GetTraps();
 
-			Traps data = Csv.Tables.Get(Csv.Files.Traps).GetDataWithId<Traps>(BuildingData);
+			LogicTrapData data = Csv.Tables.Get(LogicDataType.TRAP).GetDataWithId<LogicTrapData>(_buildingData);
 			int cost = data.BuildCost[0];
 
 			Trap trap = new Trap(home)
 			{
-				Position = new Vector2(X, Y),
-				Data = BuildingData,
+				Position = new Vector2(_x, _y),
+				Data = _buildingData,
 				Id = 500000000 + traps.Count
 			};
 
-			if (home.UseResourceByName(trap.TrapData.BuildResource, cost))
+			if (home.UseResourceByName(trap.GetTrapData().BuildResource, cost))
 			{
 				trap.SetUpgradeLevel(-1);
 				trap.StartUpgrade();

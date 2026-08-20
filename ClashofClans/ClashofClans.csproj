@@ -731,8 +731,4 @@
 	<ItemGroup>
 		<EditorConfigFiles Remove="D:\Download\Clash-of-Clans-v14-main %281%29\Clash-of-Clans-v14-main\ClashofClans\.editorconfig" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="D:\Download\Clash-of-Clans-v14-main (1)\Clash-of-Clans-v14-main\ClashofClans\.editorconfig" />
-	</ItemGroup>
 </Project>

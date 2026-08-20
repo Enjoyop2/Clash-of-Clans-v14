@@ -27,7 +27,7 @@ namespace ClashofClans.Logic.Sessions
 			}
 			catch (Exception)
 			{
-				Logger.Log($"Couldn't track location of {ip}", null, Logger.ErrorLevel.Error);
+				Logger.Log($"Couldn't track location of {ip}", null, LogErrorType.ERROR);
 				return null;
 			}
 		}

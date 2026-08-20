@@ -52,7 +52,7 @@ namespace ClashofClans.Logic.Home
 
 			GameObjectManager.Home = this;
 			ComponentManager.Home = this;
-			GameObjectManager.LoadJson(Levels.StartingHome);
+			GameObjectManager.LoadJson(LevelFiles.JsonDataStartingHome);
 		}
 
 		[JsonProperty("name")] public string Name { get; set; }
@@ -115,7 +115,7 @@ namespace ClashofClans.Logic.Home
 
 			while (true)
 			{
-				ExperienceLevels data = Csv.Tables.Get(Csv.Files.ExperienceLevels).GetDataWithId<ExperienceLevels>(ExpLevel - 1);
+				LogicExperienceLevelData data = Csv.Tables.Get(LogicDataType.EXPERIENCE_LEVEL).GetDataWithId<LogicExperienceLevelData>(ExpLevel - 1);
 				if (data == null) return;
 
 				if (ExpPoints < data.ExpPoints) return;
@@ -154,7 +154,7 @@ namespace ClashofClans.Logic.Home
 			State = 0;
 
 			if (!notResetGameObjects)
-				GameObjectManager.LoadJson(Levels.StartingHome);
+				GameObjectManager.LoadJson(LevelFiles.JsonDataStartingHome);
 		}
 
 		private bool UseResource(int resourceId, int spentAmount)

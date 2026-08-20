@@ -30,7 +30,7 @@ namespace ClashofClans.Database.Cache
 					bool result = base.Remove(allianceId);
 
 					if (!result)
-						Logger.Log($"Couldn't remove alliance {allianceId}", GetType(), Logger.ErrorLevel.Error);
+						Logger.Log($"Couldn't remove alliance {allianceId}", GetType(), LogErrorType.ERROR);
 				}
 			}
 		}

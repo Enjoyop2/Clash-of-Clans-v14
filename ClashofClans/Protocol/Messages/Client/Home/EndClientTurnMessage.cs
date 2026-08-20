@@ -32,12 +32,12 @@ namespace ClashofClans.Protocol.Messages.Client.Home
 			if (SubTick < 0)
 			{
 				Logger.Log($"Client Tick ({SubTick}) is corrupted. Disconnecting.", GetType(),
-					Logger.ErrorLevel.Warning);
+					LogErrorType.WARNING);
 				Device.Disconnect($"Client Tick ({SubTick}) is corrupted.");
 				return;
 			}
 
-			if (Device.Player.Home.Battle.GetBattleStatus())
+			if (Device.Player.Home.Battle.IsBattleStatus())
 			{
 				BattleStars = Checksum & 0x03;
 				BattlePercantage = Checksum >> 2;
@@ -84,12 +84,12 @@ namespace ClashofClans.Protocol.Messages.Client.Home
 
 							Logger.Log(
 								$"Command {command.Type} ({command.GetType().Name}) - Tick: {command.Tick}",
-								GetType(), Logger.ErrorLevel.Debug);
+								GetType(), LogErrorType.DEBUG);
 						}
 					}
 					catch (Exception)
 					{
-						Logger.Log($"Failed to decode command {type}", GetType(), Logger.ErrorLevel.Error);
+						Logger.Log($"Failed to decode command {type}", GetType(), LogErrorType.ERROR);
 					}
 				}
 				else
@@ -105,7 +105,7 @@ namespace ClashofClans.Protocol.Messages.Client.Home
 
 					Logger.Log(
 						$"Command {type} is unhandled.",
-						GetType(), Logger.ErrorLevel.Warning);
+						GetType(), LogErrorType.WARNING);
 					return;
 				}
 			}

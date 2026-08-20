@@ -16,7 +16,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 		{
 		}
 
-		public Obstacles ObstacleData => Csv.Tables.Get(Csv.Files.Obstacles).GetDataWithId<Obstacles>(Data);
+		public LogicObstacleData GetObstacleData() => Csv.Tables.Get(LogicDataType.OBSTACLE).GetDataWithId<LogicObstacleData>(Data);
 
 		public override void Tick()
 		{
@@ -26,7 +26,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 
 		public void StartClearing()
 		{
-			int clearingTime = ObstacleData.ClearTimeSeconds;
+			int clearingTime = GetObstacleData().ClearTimeSeconds;
 
 			if (clearingTime <= 0)
 			{

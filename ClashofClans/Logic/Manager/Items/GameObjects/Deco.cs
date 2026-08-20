@@ -7,14 +7,14 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 {
 	public class Deco : GameObject
 	{
-		public int Data;
-		public int Id;
+		public int Data { get; set; }
+		public int Id { get; set; }
 
 		public Deco(Home.Home home) : base(home)
 		{
 		}
 
-		public Decos DecoData => Csv.Tables.Get(Csv.Files.Decos).GetDataWithId<Decos>(Data);
+		public LogicDecoData GetDecoData() => Csv.Tables.Get(LogicDataType.DECO).GetDataWithId<LogicDecoData>(Data);
 
 		public override void Load(JObject jObject)
 		{

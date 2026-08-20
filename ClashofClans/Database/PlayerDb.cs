@@ -55,7 +55,7 @@ namespace ClashofClans.Database
 			}
 			catch (MySqlException exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 			}
 			finally
 			{
@@ -89,7 +89,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return -1;
 			}
@@ -121,7 +121,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return 0;
 			}
@@ -164,7 +164,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return null;
 			}
@@ -212,7 +212,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return null;
 			}
@@ -248,7 +248,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 			}
 
 			#endregion
@@ -272,7 +272,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 			}
 
 			#endregion
@@ -310,7 +310,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return list;
 			}
@@ -350,7 +350,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return list;
 			}
@@ -390,7 +390,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return list;
 			}
@@ -433,7 +433,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return list;
 			}
@@ -495,7 +495,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception exception)
 			{
-				Logger.Log(exception, null, Logger.ErrorLevel.Error);
+				Logger.Log(exception, null, LogErrorType.ERROR);
 
 				return null;
 			}

@@ -64,7 +64,7 @@ namespace ClashofClans.Database.Cache
 
 				bool result = Remove(p.Home.Id);
 
-				if (!result) Logger.Log($"Couldn't logout player {p.Home.Id}", GetType(), Logger.ErrorLevel.Error);
+				if (!result) Logger.Log($"Couldn't logout player {p.Home.Id}", GetType(), LogErrorType.ERROR);
 				//else Logger.Log($"User {player.UserId} logged out.", GetType(), ErrorLevel.Debug);
 			}
 		}
@@ -81,7 +81,7 @@ namespace ClashofClans.Database.Cache
 
 				bool result = Remove(userId);
 
-				if (!result) Logger.Log($"Couldn't logout player {userId}", GetType(), Logger.ErrorLevel.Error);
+				if (!result) Logger.Log($"Couldn't logout player {userId}", GetType(), LogErrorType.ERROR);
 
 				return result;
 			}

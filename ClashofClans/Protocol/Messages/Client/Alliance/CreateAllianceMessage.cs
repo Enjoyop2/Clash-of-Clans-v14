@@ -75,8 +75,7 @@ namespace ClashofClans.Protocol.Messages.Client.Alliance
 				alliance.ClanLabels = ClanLabels;
 				alliance.Level = 1;
 
-				alliance.Members.Add(
-					new AllianceMember(player, Logic.Clan.Alliance.Role.Leader));
+				alliance.Members.Add(new AllianceMember(player, AllianceRoleType.LEADER));
 
 				player.Home.AllianceInfo = alliance.GetAllianceInfo(player.Home.Id);
 

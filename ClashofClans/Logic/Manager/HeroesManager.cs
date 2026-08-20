@@ -68,7 +68,7 @@ namespace ClashofClans.Logic.Manager
 			}
 			else
 			{
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 				skin = -1;
 			}
 			return skin;
@@ -80,7 +80,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				Heroes[index].State = state;
 			else
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 		}
 		public int GetStateFromHero(int heroId)
 		{
@@ -90,7 +90,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				mode = Heroes[index].State;
 			else
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 			return mode;
 		}
 		public void SetModeToHero(int heroId, int mode)
@@ -100,7 +100,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				Heroes[index].Mode = mode;
 			else
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 		}
 		public int GetModeFromHero(int heroId)
 		{
@@ -110,7 +110,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				mode = Heroes[index].Mode;
 			else
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 			return mode;
 		}
 		public void SetPetToHero(int heroId, int petId)
@@ -130,7 +130,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				petId = Heroes[index].PetId;
 			else
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 
 			return petId;
 		}
@@ -141,7 +141,7 @@ namespace ClashofClans.Logic.Manager
 			if (index > -1)
 				Heroes[index].PetId = 0;
 			else
-				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, Logger.ErrorLevel.Error);
+				Logger.Log("Hero with id: " + heroId + " doesn't exist", null, LogErrorType.ERROR);
 		}
 		public int GetID(int id)
 		{

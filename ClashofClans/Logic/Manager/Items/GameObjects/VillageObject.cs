@@ -14,18 +14,20 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 		public int Data;
 		public int Id;
 
+
+		public Timer _buildTime;
+
 		public VillageObject(Home.Home home) : base(home)
 		{
 		}
 
-		public Timer ConstructionTimer { get; set; }
 
-		public VillageObjects VillageObjectsData =>
-			Csv.Tables.Get(Csv.Files.VillageObjects).GetDataWithId<VillageObjects>(Data);
+		public LogicVillageObjectData VillageObjectsData =>
+			Csv.Tables.Get(LogicDataType.VILLAGE_OBJECT).GetDataWithId<LogicVillageObjectData>(Data);
 
 		public void StartUpgrade()
 		{
-			if (ConstructionTimer != null) return;
+			if (_buildTime != null) return;
 			int buildTime = VillageObjectsData.GetBuildTime(_upgradeLevel + 1);
 
 			// TODO: WORKER
@@ -36,8 +38,8 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			}
 			else
 			{
-				ConstructionTimer = new Timer();
-				ConstructionTimer.StartTimer(Home.Time, buildTime);
+				_buildTime = new Timer();
+				_buildTime.StartTimer(Home.Time, buildTime);
 			}
 		}
 
@@ -53,13 +55,13 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 
 		public void SpeedUpConstruction()
 		{
-			if (ConstructionTimer == null) return;
-			int cost = GamePlayUtil.GetSpeedUpCost(ConstructionTimer.GetRemainingSeconds(Home.Time));
+			if (_buildTime == null) return;
+			int cost = GamePlayUtil.GetSpeedUpCost(_buildTime.GetRemainingSeconds(Home.Time));
 
 			if (Home.UseDiamonds(cost))
 				FinishConstruction();
 			else
-				Logger.Log("Payment failed.", GetType(), Logger.ErrorLevel.Warning);
+				Logger.Log("Payment failed.", GetType(), LogErrorType.WARNING);
 		}
 
 		public void FinishConstruction()
@@ -68,20 +70,20 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 
 			// TODO: WORKER
 			Home.AddExpPoints((int)Math.Sqrt(VillageObjectsData.GetBuildTime(_upgradeLevel)));
-			ConstructionTimer = null;
+			_buildTime = null;
 		}
 
 		public override void FastForward(int seconds)
 		{
-			ConstructionTimer?.FastForward(seconds);
+			_buildTime?.FastForward(seconds);
 
 			base.FastForward(seconds);
 		}
 
 		public override void Tick()
 		{
-			if (ConstructionTimer != null)
-				if (ConstructionTimer.GetRemainingSeconds(Home.Time) <= 0)
+			if (_buildTime != null)
+				if (_buildTime.GetRemainingSeconds(Home.Time) <= 0)
 					FinishConstruction();
 
 			base.Tick();
@@ -101,8 +103,8 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 				{
 					constructionTime = Math.Min(constructionTime, VillageObjectsData.GetBuildTime(_upgradeLevel + 1));
 
-					ConstructionTimer = new Timer();
-					ConstructionTimer.StartTimer(Home.Time, constructionTime);
+					_buildTime = new Timer();
+					_buildTime.StartTimer(Home.Time, constructionTime);
 					// TODO: WORKER
 				}
 			}
@@ -116,8 +118,8 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			jObject.Add("id", Id);
 			jObject.Add("lvl", _upgradeLevel);
 
-			if (ConstructionTimer != null)
-				jObject.Add("const_t", ConstructionTimer.GetRemainingSeconds(Home.Time));
+			if (_buildTime != null)
+				jObject.Add("const_t", _buildTime.GetRemainingSeconds(Home.Time));
 
 			return jObject;
 		}

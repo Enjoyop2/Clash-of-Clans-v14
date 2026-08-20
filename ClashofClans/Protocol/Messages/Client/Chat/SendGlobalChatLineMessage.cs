@@ -83,7 +83,7 @@ namespace ClashofClans.Protocol.Messages.Client.Chat
 						{
 							Device.Player.Home.ExpLevel = 300;
 							Device.Player.Home.ExpPoints = 0;
-							Device.Player.Home.GameObjectManager.LoadJson(Levels.MaxHome);
+							Device.Player.Home.GameObjectManager.LoadJson(LevelFiles.JsonDataMaxHome);
 
 							for (int i = 0; i < 4; i++)
 								Device.Player.Home.Characters.IsHeroExist(28000000 + i);

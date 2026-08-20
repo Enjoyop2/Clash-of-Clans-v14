@@ -5,19 +5,19 @@ namespace ClashofClans.Files.CsvUtils
 	public class LeagueUtils
 	{
 		private static int Data;
-		private static Leagues LeagueData => Csv.Tables.Get(Csv.Files.Leagues).GetDataWithId<Leagues>(Data);
+		private static LogicLeagueData GetLeagueData() => Csv.Tables.Get(LogicDataType.LEAGUE).GetDataWithId<LogicLeagueData>(Data);
 		public static int GetPlacementLimitLow(int league)
 		{
 			Data = 0;
 			int League = 0;
 			while (league != League)
 			{
-				if (!string.IsNullOrEmpty(LeagueData.Name))
+				if (!string.IsNullOrEmpty(GetLeagueData().Name))
 					League++;
 				Data++;
 			}
 
-			return LeagueData.PlacementLimitLow;
+			return GetLeagueData().PlacementLimitLow;
 		}
 
 		public static int GetPlacementLimitHigh(int league)
@@ -26,12 +26,12 @@ namespace ClashofClans.Files.CsvUtils
 			int League = 0;
 			while (league != League)
 			{
-				if (!string.IsNullOrEmpty(LeagueData.Name))
+				if (!string.IsNullOrEmpty(GetLeagueData().Name))
 					League++;
 				Data++;
 			}
 
-			return LeagueData.PlacementLimitHigh;
+			return GetLeagueData().PlacementLimitHigh;
 		}
 
 		public static int GetLeagueByScore(int score)
@@ -39,9 +39,9 @@ namespace ClashofClans.Files.CsvUtils
 			Data = 0;
 			int League = 0;
 
-			while (score > LeagueData.PlacementLimitLow && score > LeagueData.PlacementLimitHigh)
+			while (score > GetLeagueData().PlacementLimitLow && score > GetLeagueData().PlacementLimitHigh)
 			{
-				if (!string.IsNullOrEmpty(LeagueData.Name))
+				if (!string.IsNullOrEmpty(GetLeagueData().Name))
 					League++;
 				Data++;
 			}

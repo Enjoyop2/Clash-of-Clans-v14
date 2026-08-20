@@ -75,11 +75,11 @@ namespace ClashofClans.Protocol
 			{
 				await Device.Handler.Channel.WriteAndFlushAsync(this);
 
-				Logger.Log($"[S] Message {Id} ({GetType().Name}) sent.", GetType(), Logger.ErrorLevel.Debug);
+				Logger.Log($"[S] Message {Id} ({GetType().Name}) sent.", GetType(), LogErrorType.DEBUG);
 			}
 			catch (Exception)
 			{
-				Logger.Log($"Failed to send {Id}.", GetType(), Logger.ErrorLevel.Debug);
+				Logger.Log($"Failed to send {Id}.", GetType(), LogErrorType.DEBUG);
 			}
 		}
 

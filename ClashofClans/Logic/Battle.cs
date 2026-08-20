@@ -9,29 +9,32 @@ namespace ClashofClans.Logic
 	{
 		private int Data;
 		private int League;
-		private int BattleStars { get; set; }
-		private int BattlePercentage { get; set; }
-		private Player EnemyData { get; set; }
-		private bool BattleStatus { get; set; }
-		private Leagues LeagueData => Csv.Tables.Get(Csv.Files.Leagues).GetDataWithId<Leagues>(Data);
-		private Globals GlobalsData => Csv.Tables.Get(Csv.Files.Globals).GetDataWithId<Globals>(Data);
+
+
+		private bool _battleStatus;
+		private int _battlePercentage;
+		private int _battleStars;
+		private Player _enemyData;
+
+		private LogicLeagueData GetLeagueData() => Csv.Tables.Get(LogicDataType.LEAGUE).GetDataWithId<LogicLeagueData>(Data);
+		private LogicGlobalData GlobalsData => Csv.Tables.Get(LogicDataType.GLOBAL).GetDataWithId<LogicGlobalData>(Data);
 
 		public async void StartBattle(Device device)
 		{
-			if (!GetBattleStatus())
+			if (!IsBattleStatus())
 			{
 				SetBattleStatus(true);
 			}
 			else
 			{
-				Logger.Log("Battle already started", null, Logger.ErrorLevel.Error);
+				Logger.Log("Battle already started", null, LogErrorType.ERROR);
 				await new OutOfSyncMessage(device).SendAsync();
 			}
 		}
 
 		public async void EndBattle(Player player, Device device)
 		{
-			if (GetBattleStatus())
+			if (IsBattleStatus())
 			{
 				SetBattleStatus(false);
 
@@ -126,13 +129,13 @@ namespace ClashofClans.Logic
 
 				enemy.Save();
 
-				Logger.Log($"The battle is over. Attacker id: {player.Home.Id}, attacker name: {player.Home.Name}, defender id: {enemy.Home.Id}, defender name: {enemy.Home.Name}, percentage: {GetBattlePercenatage() + "%"}, stars: {GetBattleStars()}, trophies won: {newAttackerScore - attackerScore}", null, Logger.ErrorLevel.Debug);
+				Logger.Log($"The battle is over. Attacker id: {player.Home.Id}, attacker name: {player.Home.Name}, defender id: {enemy.Home.Id}, defender name: {enemy.Home.Name}, percentage: {GetBattlePercenatage() + "%"}, stars: {GetBattleStars()}, trophies won: {newAttackerScore - attackerScore}", null, LogErrorType.DEBUG);
 
 				Destruct();
 			}
 			else
 			{
-				Logger.Log("Battle already ended", null, Logger.ErrorLevel.Error);
+				Logger.Log("Battle already ended", null, LogErrorType.ERROR);
 				await new OutOfSyncMessage(device).SendAsync();
 			}
 		}
@@ -152,9 +155,9 @@ namespace ClashofClans.Logic
 		{
 			Data = 0;
 			League = 0;
-			while (player.Home.Trophies > LeagueData.PlacementLimitLow && player.Home.Trophies > LeagueData.PlacementLimitHigh)
+			while (player.Home.Trophies > GetLeagueData().PlacementLimitLow && player.Home.Trophies > GetLeagueData().PlacementLimitHigh)
 			{
-				if (!string.IsNullOrEmpty(LeagueData.Name))
+				if (!string.IsNullOrEmpty(GetLeagueData().Name))
 					League++;
 				Data++;
 			}
@@ -168,9 +171,9 @@ namespace ClashofClans.Logic
 			League = 0;
 			if (isAttacker || player.Home.League != 0)
 			{
-				while (player.Home.Trophies > LeagueData.PlacementLimitLow && player.Home.Trophies > LeagueData.PlacementLimitHigh)
+				while (player.Home.Trophies > GetLeagueData().PlacementLimitLow && player.Home.Trophies > GetLeagueData().PlacementLimitHigh)
 				{
-					if (!string.IsNullOrEmpty(LeagueData.Name))
+					if (!string.IsNullOrEmpty(GetLeagueData().Name))
 						League++;
 					Data++;
 				}
@@ -181,43 +184,16 @@ namespace ClashofClans.Logic
 
 		public void SetBattleStatus(bool status)
 		{
-			BattleStatus = status;
+			_battleStatus = status;
 		}
 
-		public bool GetBattleStatus()
-		{
-			return BattleStatus;
-		}
-
-		public void SetBattleStars(int stars)
-		{
-			BattleStars = stars;
-		}
-
-		public int GetBattleStars()
-		{
-			return BattleStars;
-		}
-
-		public void SetBattlePercenatage(int percentage)
-		{
-			BattlePercentage = percentage;
-		}
-
-		public int GetBattlePercenatage()
-		{
-			return BattlePercentage;
-		}
-
-		public void SetEnemyData(Player enemy)
-		{
-			EnemyData = enemy;
-		}
-
-		public Player GetEnemyData()
-		{
-			return EnemyData;
-		}
+		public bool IsBattleStatus() => _battleStatus;
+		public int GetBattlePercenatage() => _battlePercentage;
+		public int GetBattleStars() => _battleStars;
+		public Player GetEnemyData() => _enemyData;
+		public void SetBattlePercenatage(int percentage) => _battlePercentage = percentage;
+		public void SetBattleStars(int stars) => _battleStars = stars;
+		public void SetEnemyData(Player enemy) => _enemyData = enemy;
 
 		private bool EloOffsetDampeningEnabled()
 		{

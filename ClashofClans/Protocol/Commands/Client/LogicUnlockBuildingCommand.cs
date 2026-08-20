@@ -32,7 +32,7 @@ namespace ClashofClans.Protocol.Commands.Client
 			if (index > -1)
 			{
 				Building building = buildings[index];
-				Buildings data = building.BuildingData;
+				LogicBuildingData data = building.BuildingData;
 
 				int cost = data.BuildCost[0];
 				string resource = data.BuildResource;

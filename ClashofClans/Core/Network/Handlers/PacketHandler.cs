@@ -34,7 +34,7 @@ namespace ClashofClans.Core.Network.Handlers
 			}
 			else
 			{
-				Logger.Log("Client reached ratelimit. Disconnecting...", GetType(), Logger.ErrorLevel.Warning);
+				Logger.Log("Client reached ratelimit. Disconnecting...", GetType(), LogErrorType.WARNING);
 				Device.Disconnect();
 			}
 		}
@@ -46,7 +46,7 @@ namespace ClashofClans.Core.Network.Handlers
 			IPEndPoint remoteAddress = (IPEndPoint)Channel.RemoteAddress;
 
 			Logger.Log($"Client {remoteAddress.Address.MapToIPv4()}:{remoteAddress.Port} connected.", GetType(),
-				Logger.ErrorLevel.Debug);
+				LogErrorType.DEBUG);
 
 			base.ChannelRegistered(context);
 		}
@@ -65,7 +65,7 @@ namespace ClashofClans.Core.Network.Handlers
 						player.Home.GameMatchmakingManager.searchTimer.Stop();
 					}
 
-					if (Device.Player.Home.Battle.GetBattleStatus())
+					if (Device.Player.Home.Battle.IsBattleStatus())
 						Device.Player.Home.Battle.EndBattle(Device.Player, Device);
 
 					if (player.Device.Session.SessionId == Device.Session.SessionId)
@@ -76,7 +76,7 @@ namespace ClashofClans.Core.Network.Handlers
 			IPEndPoint remoteAddress = (IPEndPoint)Channel.RemoteAddress;
 
 			Logger.Log($"Client {remoteAddress.Address.MapToIPv4()}:{remoteAddress.Port} disconnected.", GetType(),
-				Logger.ErrorLevel.Debug);
+				LogErrorType.DEBUG);
 
 			base.ChannelUnregistered(context);
 		}
@@ -85,7 +85,7 @@ namespace ClashofClans.Core.Network.Handlers
 		{
 			if (exception.GetType() != typeof(ReadTimeoutException) &&
 				exception.GetType() != typeof(WriteTimeoutException))
-				Logger.Log(exception, GetType(), Logger.ErrorLevel.Error);
+				Logger.Log(exception, GetType(), LogErrorType.ERROR);
 
 			context.CloseAsync();
 		}

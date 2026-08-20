@@ -40,9 +40,9 @@ namespace ClashofClans.Protocol.Commands.Client
 				Id = 180000000 + decos.Count
 			};
 
-			int cost = deco.DecoData.BuildCost;
+			int cost = deco.GetDecoData().BuildCost;
 
-			if (home.UseResourceByName(deco.DecoData.BuildResource, cost))
+			if (home.UseResourceByName(deco.GetDecoData().BuildResource, cost))
 			{
 				decos.Add(deco);
 			}

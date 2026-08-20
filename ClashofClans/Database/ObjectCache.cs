@@ -54,7 +54,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception)
 			{
-				Logger.Log("Failed to cache player.", GetType(), Logger.ErrorLevel.Error);
+				Logger.Log("Failed to cache player.", GetType(), LogErrorType.ERROR);
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception)
 			{
-				Logger.Log("Failed to cache alliance.", GetType(), Logger.ErrorLevel.Error);
+				Logger.Log("Failed to cache alliance.", GetType(), LogErrorType.ERROR);
 			}
 		}
 
@@ -94,7 +94,7 @@ namespace ClashofClans.Database
 								st.Stop();
 								Logger.Log($"Successfully got player {id} from cache in {st.ElapsedMilliseconds}ms",
 									null,
-									Logger.ErrorLevel.Debug);
+									LogErrorType.DEBUG);
 
 								return new Player
 								{
@@ -104,7 +104,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception)
 			{
-				Logger.Log("Failed to fetch player from cache.", GetType(), Logger.ErrorLevel.Error);
+				Logger.Log("Failed to fetch player from cache.", GetType(), LogErrorType.ERROR);
 			}
 
 			return null;
@@ -123,7 +123,7 @@ namespace ClashofClans.Database
 					{
 						st.Stop();
 						Logger.Log($"Successfully got alliance {id} from cache in {st.ElapsedMilliseconds}ms", null,
-							Logger.ErrorLevel.Debug);
+							LogErrorType.DEBUG);
 
 						return alliance;
 					}
@@ -131,7 +131,7 @@ namespace ClashofClans.Database
 			}
 			catch (Exception)
 			{
-				Logger.Log("Failed to fetch alliance from cache.", GetType(), Logger.ErrorLevel.Error);
+				Logger.Log("Failed to fetch alliance from cache.", GetType(), LogErrorType.ERROR);
 			}
 
 			return null;

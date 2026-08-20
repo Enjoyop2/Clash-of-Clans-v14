@@ -10,22 +10,23 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 	public class Trap : GameObject
 	{
 		private int _upgradeLevel;
-		public bool AttackMode;
-		public int Data;
-		public int Id;
-		public int Level;
+		private bool _attackMode;
+
+		public int Data { get; set; }
+		public int Id { get; set; }
+		public int Level { get; set; }
 		public Timer ConstructionTimer { get; set; }
 
 		public Trap(Home.Home home) : base(home)
 		{
 		}
 
-		public Traps TrapData => Csv.Tables.Get(Csv.Files.Traps).GetDataWithId<Traps>(Data);
+		public LogicTrapData GetTrapData() => Csv.Tables.Get(LogicDataType.TRAP).GetDataWithId<LogicTrapData>(Data);
 
 		public void StartUpgrade()
 		{
 			if (ConstructionTimer != null) return;
-			int buildTime = TrapData.GetBuildTime(_upgradeLevel + 1);
+			int buildTime = GetTrapData().GetBuildTime(_upgradeLevel + 1);
 
 			// TODO: WORKER
 
@@ -55,7 +56,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			SetUpgradeLevel(_upgradeLevel + 1);
 
 			// TODO: WORKER
-			Home.AddExpPoints((int)Math.Sqrt(TrapData.GetBuildTime(_upgradeLevel)));
+			Home.AddExpPoints((int)Math.Sqrt(GetTrapData().GetBuildTime(_upgradeLevel)));
 			ConstructionTimer = null;
 		}
 
@@ -71,7 +72,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 				int constructionTime = jObject["const_t"].ToObject<int>();
 				if (constructionTime > -1)
 				{
-					constructionTime = Math.Min(constructionTime, TrapData.GetBuildTime(_upgradeLevel + 1));
+					constructionTime = Math.Min(constructionTime, GetTrapData().GetBuildTime(_upgradeLevel + 1));
 
 					ConstructionTimer = new Timer();
 					ConstructionTimer.StartTimer(Home.Time, constructionTime);
@@ -80,7 +81,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			}
 
 			if (jObject.ContainsKey("attack_mode"))
-				AttackMode = jObject["attack_mode"].ToObject<bool>();
+				_attackMode = jObject["attack_mode"].ToObject<bool>();
 		}
 
 		public override JObject Save()
@@ -94,7 +95,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			if (ConstructionTimer != null)
 				jObject.Add("const_t", ConstructionTimer.GetRemainingSeconds(Home.Time));
 
-			if (AttackMode)
+			if (_attackMode)
 				jObject.Add("attack_mode", true);
 
 			return jObject;

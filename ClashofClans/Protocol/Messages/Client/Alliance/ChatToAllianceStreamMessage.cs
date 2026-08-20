@@ -86,7 +86,7 @@ namespace ClashofClans.Protocol.Messages.Client.Alliance
 						{
 							Device.Player.Home.ExpLevel = 300;
 							Device.Player.Home.ExpPoints = 0;
-							Device.Player.Home.GameObjectManager.LoadJson(Levels.MaxHome);
+							Device.Player.Home.GameObjectManager.LoadJson(LevelFiles.JsonDataMaxHome);
 
 							await new OwnHomeDataMessage(Device).SendAsync();
 
@@ -97,7 +97,7 @@ namespace ClashofClans.Protocol.Messages.Client.Alliance
 						{
 							Device.Player.Home.ExpLevel = 300;
 							Device.Player.Home.ExpPoints = 0;
-							Device.Player.Home.GameObjectManager.LoadJson(Levels.EpicJungle);
+							Device.Player.Home.GameObjectManager.LoadJson(LevelFiles.JsonDataEpicJungle);
 
 							await new OwnHomeDataMessage(Device).SendAsync();
 

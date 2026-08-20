@@ -1,28 +1,29 @@
 using System.Collections.Generic;
 
 using ClashofClans.Files.CsvReader;
+using ClashofClans.Files.Logic;
 
 namespace ClashofClans.Files.CsvHelpers
 {
 	public class DataTable
 	{
-		public List<Data> Datas;
-		public Csv.Files Index;
+		public List<LogicData> Datas;
+		public LogicDataType Index;
 
 		public DataTable()
 		{
-			Datas = new List<Data>();
+			Datas = new List<LogicData>();
 		}
 
-		public DataTable(Table table, Csv.Files index)
+		public DataTable(Table table, LogicDataType index)
 		{
 			Index = index;
-			Datas = new List<Data>();
+			Datas = new List<LogicData>();
 
 			for (int i = 0; i < table.GetRowCount(); i += 2)
 			{
 				Row row = table.GetRowAt(i);
-				Data data = Csv.Create(Index, row, this);
+				LogicData data = Csv.Create(Index, row, this);
 				Datas.Add(data);
 			}
 		}
@@ -32,29 +33,29 @@ namespace ClashofClans.Files.CsvHelpers
 			return Datas?.Count ?? 0;
 		}
 
-		public List<Data> GetDatas()
+		public List<LogicData> GetDatas()
 		{
 			return Datas;
 		}
 
-		public Data GetDataWithId(int id)
+		public LogicData GetDataWithId(int id)
 		{
 			return Datas[GlobalId.GetInstanceId(id)];
 		}
 
-		public T GetDataWithId<T>(int id) where T : Data
+		public T GetDataWithId<T>(int id) where T : LogicData
 		{
 			return Datas[GlobalId.GetInstanceId(id)] as T;
 		}
 
-		public T GetDataWithInstanceId<T>(int id) where T : Data
+		public T GetDataWithInstanceId<T>(int id) where T : LogicData
 		{
 			if (Datas.Count < id) return null;
 
 			return Datas[id] as T;
 		}
 
-		public T GetData<T>(string name) where T : Data
+		public T GetData<T>(string name) where T : LogicData
 		{
 			return Datas.Find(data => data.GetName() == name) as T;
 		}

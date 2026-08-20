@@ -23,9 +23,9 @@ namespace ClashofClans.Protocol.Messages.Server.Account
 			Writer.WriteString(string.Empty); // FB Id
 			Writer.WriteString("G:1"); // GP Id
 
-			Writer.WriteInt(Resources.Fingerprint.GetMajorVersion);
-			Writer.WriteInt(Resources.Fingerprint.GetBuildVersion);
-			Writer.WriteInt(Resources.Fingerprint.GetContentVersion);
+			Writer.WriteInt(Resources.Fingerprint.GetMajorVersion());
+			Writer.WriteInt(Resources.Fingerprint.GetBuildVersion());
+			Writer.WriteInt(Resources.Fingerprint.GetContentVersion());
 
 			Writer.WriteString(Resources.Configuration.ServerEnvironment);
 

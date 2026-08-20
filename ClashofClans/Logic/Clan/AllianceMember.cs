@@ -9,7 +9,7 @@ namespace ClashofClans.Logic.Clan
 {
 	public class AllianceMember
 	{
-		public AllianceMember(Player player, Alliance.Role role)
+		public AllianceMember(Player player, AllianceRoleType role)
 		{
 			Id = player.Home.Id;
 			Role = (int)role;

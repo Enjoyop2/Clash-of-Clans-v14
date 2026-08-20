@@ -25,8 +25,8 @@ namespace ClashofClans.Logic.Manager.Items.Components
 
 		public int MaxTime => ResourcePer100Hours > 0 ? (int)(360000L * ResourceMax / ResourcePer100Hours) : 0;
 
-		public Files.Logic.Resources ResourceData =>
-			Csv.Tables.Get(Csv.Files.Resources).GetData<Files.Logic.Resources>(ProducesResource);
+		public LogicResourceData ResourceData =>
+			Csv.Tables.Get(LogicDataType.RESOURCE).GetData<LogicResourceData>(ProducesResource);
 
 		public int AvailableToCollect
 		{
@@ -68,7 +68,7 @@ namespace ClashofClans.Logic.Manager.Items.Components
 		public void SetProduction()
 		{
 			Building building = (Building)Parent;
-			Buildings buildingData = building.BuildingData;
+			LogicBuildingData buildingData = building.BuildingData;
 
 			int lvl = building.GetUpgradeLevel();
 			if (lvl >= 0 && !building.Locked)

@@ -40,8 +40,8 @@ namespace ClashofClans.Logic
 			packet.WriteInt(0);
 			packet.WriteCompressedString(Home.GameObjectManager.Save());
 
-			packet.WriteCompressedString(Levels.Calendar);
-			packet.WriteCompressedString(Levels.Globals);
+			packet.WriteCompressedString(JsonFiles.JsonDataCalendar);
+			packet.WriteCompressedString(JsonFiles.JsonDataGlobals);
 		}
 
 		public void LogicClientAvatar(ByteBuffer packet)

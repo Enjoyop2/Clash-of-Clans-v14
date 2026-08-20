@@ -12,7 +12,8 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 	public class Building : GameObject
 	{
 		private int _upgradeLevel;
-		public int Ammo;
+		private int _ammo;
+
 		public byte Mode;
 		public bool AttackMode;
 		public bool BoostPause;
@@ -32,7 +33,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 		public Timer ConstructionTimer { get; set; }
 		public Timer BoostTimer { get; set; }
 
-		public Buildings BuildingData => Csv.Tables.Get(Csv.Files.Buildings).GetDataWithId<Buildings>(Data);
+		public LogicBuildingData BuildingData => Csv.Tables.Get(LogicDataType.BUILDING).GetDataWithId<LogicBuildingData>(Data);
 
 		public ResourceProductionComponent ResourceProductionComponent =>
 			TryGetComponent(5, out Component component) ? (ResourceProductionComponent)component : null;
@@ -45,10 +46,10 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			if (!string.IsNullOrEmpty(BuildingData.ProducesResource))
 				AddComponent(new ResourceProductionComponent(this));
 
-			if (BuildingData.CanStoreResources)
+			if (BuildingData.CanStoreResources())
 				AddComponent(new ResourceStorageComponent(this));
 
-			if (BuildingData.IsLaboratory)
+			if (BuildingData.IsLaboratory())
 				AddComponent(new UnitUpgradeComponent(this));
 		}
 
@@ -108,7 +109,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			if (Home.UseDiamonds(cost))
 				FinishConstruction();
 			else
-				Logger.Log("Payment failed.", GetType(), Logger.ErrorLevel.Warning);
+				Logger.Log("Payment failed.", GetType(), LogErrorType.WARNING);
 		}
 
 		public int GetBuildingData()
@@ -131,10 +132,10 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 
 		public void FinishConstruction()
 		{
-			if (_upgradeLevel + 1 > BuildingData.MaxLevel)
+			if (_upgradeLevel + 1 > BuildingData.GetMaxLevel())
 			{
-				SetUpgradeLevel(BuildingData.MaxLevel);
-				Logger.Log($"Max level reached! [{BuildingData.Name}]", GetType(), Logger.ErrorLevel.Warning);
+				SetUpgradeLevel(BuildingData.GetMaxLevel());
+				Logger.Log($"Max level reached! [{BuildingData.Name}]", GetType(), LogErrorType.WARNING);
 				return;
 			}
 
@@ -188,8 +189,8 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			if (BoostTimer != null)
 				jObject.Add("boost_t", BoostTimer.GetRemainingSeconds(Home.Time));
 
-			if (Ammo > 0)
-				jObject.Add("ammo", Ammo);
+			if (_ammo > 0)
+				jObject.Add("ammo", _ammo);
 
 			if (Mode > 0)
 				jObject.Add("mode", Mode);
@@ -250,7 +251,7 @@ namespace ClashofClans.Logic.Manager.Items.GameObjects
 			}
 
 			if (jObject.ContainsKey("ammo"))
-				Ammo = jObject["ammo"].ToObject<int>();
+				_ammo = jObject["ammo"].ToObject<int>();
 
 			if (jObject.ContainsKey("mode"))
 				Mode = jObject["mode"].ToObject<byte>();

@@ -172,7 +172,7 @@ namespace ClashofClans.Protocol.Commands.Client
 				{
 					VillageObject villageObject = villageObjects[index];
 
-					VillageObjects villageObjectData = villageObject.VillageObjectsData;
+					LogicVillageObjectData villageObjectData = villageObject.VillageObjectsData;
 
 					bool paid = home.UseResourceByName(villageObjectData.BuildResource, villageObjectData.BuildCost);
 					if (paid)

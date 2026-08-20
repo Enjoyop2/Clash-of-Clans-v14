@@ -45,7 +45,7 @@ namespace ClashofClans.Protocol.Commands.Client
 
 			//if (home.GameObjectManager.IsWorkerAvailable())
 			//{
-			Buildings data = Csv.Tables.Get(Csv.Files.Buildings).GetDataWithId<Buildings>(BuildingData);
+			LogicBuildingData data = Csv.Tables.Get(LogicDataType.BUILDING).GetDataWithId<LogicBuildingData>(BuildingData);
 			int cost = data.BuildCost[0];
 
 			if (home.UseResourceByName(data.BuildResource, cost))

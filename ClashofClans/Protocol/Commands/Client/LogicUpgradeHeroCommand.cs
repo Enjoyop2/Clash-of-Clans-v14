@@ -48,7 +48,7 @@ namespace ClashofClans.Protocol.Commands.Client
 			}
 			else
 			{
-				Logger.Log("Unknown hero ID: " + HeroId, null, Logger.ErrorLevel.Error);
+				Logger.Log("Unknown hero ID: " + HeroId, null, LogErrorType.ERROR);
 			}
 		}
 	}

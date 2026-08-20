@@ -10,15 +10,15 @@ namespace ClashofClans.Files
 {
 	public class Fingerprint
 	{
-		public const string Path = "GameAssets/fingerprint.json";
+		public const string PATH_FINERPRINT = "GameAssets/fingerprint.json";
 
 		public Fingerprint()
 		{
 			try
 			{
-				if (File.Exists(Path))
+				if (File.Exists(PATH_FINERPRINT))
 				{
-					Json = File.ReadAllText(Path);
+					Json = File.ReadAllText(PATH_FINERPRINT);
 					Files = new List<Asset>();
 
 					JObject json = JObject.Parse(Json);
@@ -48,15 +48,15 @@ namespace ClashofClans.Files
 		[JsonIgnore] public string Json { get; set; }
 		[JsonIgnore] public int[] Version { get; set; }
 
-		[JsonIgnore] public int GetMajorVersion => Version?[0] ?? 3;
-		[JsonIgnore] public int GetBuildVersion => Version?[1] ?? 377;
-		[JsonIgnore] public int GetContentVersion => Version?[2] ?? 1;
+		public int GetMajorVersion() => Version?[0] ?? 14;
+		public int GetBuildVersion() => Version?[1] ?? 211;
+		public int GetContentVersion() => Version?[2] ?? 0;
 
 		[JsonProperty("files")] public List<Asset> Files { get; set; }
 		[JsonProperty("sha")] public string Sha { get; set; }
 
 		[JsonProperty("version")]
-		public string GetVersion => $"{GetMajorVersion}.{GetBuildVersion}.{GetContentVersion}";
+		public string GetVersion => $"{GetMajorVersion()}.{GetBuildVersion()}.{GetContentVersion()}";
 
 		public void Save()
 		{
@@ -68,13 +68,7 @@ namespace ClashofClans.Files
 
 			Json = json.Replace("/", "\\/").TrimEnd();
 
-			File.WriteAllText(Path, Json);
+			File.WriteAllText(PATH_FINERPRINT, Json);
 		}
-	}
-
-	public class Asset
-	{
-		[JsonProperty("file")] public string File { get; set; }
-		[JsonProperty("sha")] public string Sha { get; set; }
 	}
 }

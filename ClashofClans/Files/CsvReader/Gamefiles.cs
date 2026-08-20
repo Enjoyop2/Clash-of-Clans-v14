@@ -22,7 +22,7 @@ namespace ClashofClans.Files.CsvReader
 			_dataTables.Clear();
 		}
 
-		public DataTable Get(Csv.Files index)
+		public DataTable Get(LogicDataType index)
 		{
 			return _dataTables[(int)index - 1];
 		}
@@ -32,7 +32,7 @@ namespace ClashofClans.Files.CsvReader
 			return _dataTables[index - 1];
 		}
 
-		public void Initialize(Table table, Csv.Files index)
+		public void Initialize(Table table, LogicDataType index)
 		{
 			_dataTables[(int)index - 1] = new DataTable(table, index);
 		}

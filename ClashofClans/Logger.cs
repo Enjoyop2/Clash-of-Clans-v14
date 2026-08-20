@@ -5,15 +5,8 @@ using NLog;
 
 namespace ClashofClans
 {
-	public class Logger
+	public partial class Logger
 	{
-		public enum ErrorLevel
-		{
-			Info = 1,
-			Warning = 2,
-			Error = 3,
-			Debug = 4
-		}
 #if DEBUG
 		private static readonly object ConsoleSync = new object();
 #endif
@@ -27,11 +20,11 @@ namespace ClashofClans
 			_logger = LogManager.GetCurrentClassLogger();
 		}
 
-		public static void Log(object message, Type type, ErrorLevel logType = ErrorLevel.Info)
+		public static void Log(object message, Type type, LogErrorType logType = LogErrorType.INFO)
 		{
 			switch (logType)
 			{
-				case ErrorLevel.Info:
+				case LogErrorType.INFO:
 					{
 						_logger.Info(message);
 
@@ -42,7 +35,7 @@ namespace ClashofClans
 						break;
 					}
 
-				case ErrorLevel.Warning:
+				case LogErrorType.WARNING:
 					{
 						_logger.Warn(message);
 #if DEBUG
@@ -57,7 +50,7 @@ namespace ClashofClans
 						break;
 					}
 
-				case ErrorLevel.Error:
+				case LogErrorType.ERROR:
 					{
 						_logger.Error(message);
 #if DEBUG
@@ -73,7 +66,7 @@ namespace ClashofClans
 						break;
 					}
 
-				case ErrorLevel.Debug:
+				case LogErrorType.DEBUG:
 					{
 #if DEBUG
 						_logger.Debug(message);

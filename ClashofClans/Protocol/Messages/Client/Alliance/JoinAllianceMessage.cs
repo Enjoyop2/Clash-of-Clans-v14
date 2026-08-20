@@ -32,7 +32,7 @@ namespace ClashofClans.Protocol.Messages.Client.Alliance
                 return;
             }*/
 
-			alliance.Add(new AllianceMember(Device.Player, Logic.Clan.Alliance.Role.Member));
+			alliance.Add(new AllianceMember(Device.Player, AllianceRoleType.MEMBER));
 
 			home.AllianceInfo = alliance.GetAllianceInfo(home.Id);
 

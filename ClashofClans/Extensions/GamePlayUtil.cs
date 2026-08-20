@@ -11,12 +11,12 @@ namespace ClashofClans.Extensions
 
 		private static DataTable GetGlobalsDataTable()
 		{
-			return Csv.Tables.Get(Csv.Files.Globals);
+			return Csv.Tables.Get(LogicDataType.GLOBAL);
 		}
 
-		private int GetGlobalNumberValue(string rowName)
+		private static int GetGlobalNumberValue(string rowName)
 		{
-			return GetGlobalsDataTable().GetData<Globals>(rowName).NumberValue;
+			return GetGlobalsDataTable().GetData<LogicGlobalData>(rowName).NumberValue;
 		}
 
 		private static int CalculateResourceCost(int sup, int inf, int supCost, int infCost, int amount)
@@ -29,7 +29,7 @@ namespace ClashofClans.Extensions
 			return (int)Math.Round((supCost - infCost) * (long)(amount - inf) / (sup - inf * 1.0)) + infCost;
 		}
 
-		public int GetResourceDiamondCost(int resourceCount, string resource)
+		public static int GetResourceDiamondCost(int resourceCount, string resource)
 		{
 			int result = 0;
 			if (resource == "DarkElixir")
@@ -96,9 +96,8 @@ namespace ClashofClans.Extensions
 			return result;
 		}
 
-		public int GetDarkElixirDiamondCost(int resourceCount)
+		public static int GetDarkElixirDiamondCost(int resourceCount)
 		{
-			DataTable globals = Csv.Tables.Get(Csv.Files.Globals);
 			int result = 0;
 			if (resourceCount >= 1)
 			{
@@ -110,39 +109,35 @@ namespace ClashofClans.Extensions
 						{
 							if (resourceCount >= 10000)
 							{
-								int supCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_100000").NumberValue;
-								int infCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_10000").NumberValue;
+								int supCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_100000");
+								int infCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_10000");
 								result = CalculateResourceCost(100000, 10000, supCost, infCost, resourceCount);
 							}
 							else
 							{
-								int supCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_10000").NumberValue;
-								int infCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_1000").NumberValue;
+								int supCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_10000");
+								int infCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_1000");
 								result = CalculateResourceCost(10000, 1000, supCost, infCost, resourceCount);
 							}
 						}
 						else
 						{
-							int supCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_1000").NumberValue;
-							int infCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_100").NumberValue;
+							int supCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_1000");
+							int infCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_100");
 							result = CalculateResourceCost(1000, 100, supCost, infCost, resourceCount);
 						}
 					}
 					else
 					{
-						int supCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_100")
-							.NumberValue;
-						int infCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_10")
-							.NumberValue;
+						int supCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_100");
+						int infCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_10");
 						result = CalculateResourceCost(100, 10, supCost, infCost, resourceCount);
 					}
 				}
 				else
 				{
-					int supCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_10")
-						.NumberValue;
-					int infCost = globals.GetData<Globals>("DARK_ELIXIR_DIAMOND_COST_1")
-						.NumberValue;
+					int supCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_10");
+					int infCost = GetGlobalNumberValue("DARK_ELIXIR_DIAMOND_COST_1");
 					result = CalculateResourceCost(10, 1, supCost, infCost, resourceCount);
 				}
 			}
@@ -153,7 +148,7 @@ namespace ClashofClans.Extensions
 
 		public static int GetSpeedUpCost(int seconds)
 		{
-			DataTable globals = Csv.Tables.Get(Csv.Files.Globals);
+			DataTable globals = Csv.Tables.Get(LogicDataType.GLOBAL);
 			int cost = 0;
 			if (seconds >= 1)
 			{
@@ -163,29 +158,29 @@ namespace ClashofClans.Extensions
 					{
 						if (seconds >= 86400)
 						{
-							int supCost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_1_WEEK").NumberValue;
-							int infCost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_24_HOURS").NumberValue;
+							int supCost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_1_WEEK").NumberValue;
+							int infCost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_24_HOURS").NumberValue;
 							cost = CalculateSpeedUpCost(604800, 86400, supCost, infCost, seconds);
 						}
 						else
 						{
-							int supCost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_24_HOURS").NumberValue;
-							int infCost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_1_HOUR").NumberValue;
+							int supCost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_24_HOURS").NumberValue;
+							int infCost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_1_HOUR").NumberValue;
 							cost = CalculateSpeedUpCost(86400, 3600, supCost, infCost, seconds);
 						}
 					}
 					else
 					{
-						int supCost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_1_HOUR")
+						int supCost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_1_HOUR")
 							.NumberValue;
-						int infCost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_1_MIN")
+						int infCost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_1_MIN")
 							.NumberValue;
 						cost = CalculateSpeedUpCost(3600, 60, supCost, infCost, seconds);
 					}
 				}
 				else
 				{
-					cost = globals.GetData<Globals>("SPEED_UP_DIAMOND_COST_1_MIN")
+					cost = globals.GetData<LogicGlobalData>("SPEED_UP_DIAMOND_COST_1_MIN")
 						.NumberValue;
 				}
 			}

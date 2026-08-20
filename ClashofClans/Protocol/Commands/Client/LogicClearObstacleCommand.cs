@@ -36,16 +36,15 @@ namespace ClashofClans.Protocol.Commands.Client
 			if (index > -1)
 			{
 				Obstacle obstacle = obstacles[index];
-				Obstacles data = obstacle.ObstacleData;
+				LogicObstacleData data = obstacle.GetObstacleData();
 
 				if (!data.IsTombstone && home.State == 1 && objects.GetBuilderhallLevel() < Csv.Tables
-						.Get(Csv.Files.Globals)
-						.GetData<Globals>("VILLAGE2_DO_NOT_ALLOW_CLEAR_OBSTACLE_TH").NumberValue) return;
+						.Get(LogicDataType.GLOBAL).GetData<LogicGlobalData>("VILLAGE2_DO_NOT_ALLOW_CLEAR_OBSTACLE_TH").NumberValue) return;
 
 				if (home.UseResourceByName(data.ClearResource, data.ClearCost))
 				{
 					if (data.IsTombstone)
-						foreach (Obstacle o in obstacles.Where(o => o.ObstacleData.IsTombstone))
+						foreach (Obstacle o in obstacles.Where(o => o.GetObstacleData().IsTombstone))
 							o.StartClearing();
 					else
 						obstacle.StartClearing();

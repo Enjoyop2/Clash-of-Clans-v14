@@ -12,15 +12,8 @@ using Newtonsoft.Json;
 
 namespace ClashofClans.Logic.Clan
 {
-	public class Alliance
+	public partial class Alliance
 	{
-		public enum Role
-		{
-			Member = 1,
-			Leader = 2,
-			Elder = 3,
-			CoLeader = 4
-		}
 
 		[JsonProperty("members")] public List<AllianceMember> Members = new List<AllianceMember>(50);
 		[JsonProperty("stream")] public List<AllianceStreamEntry> Stream = new List<AllianceStreamEntry>(40);
@@ -191,15 +184,15 @@ namespace ClashofClans.Logic.Clan
 				AllianceMember member = Members[index];
 
 				// If the leader leaves the clan and it's not empty, we choose a new leader 
-				if (member.Role == (int)Role.Leader)
+				if (member.Role == (int)AllianceRoleType.LEADER)
 				{
 					AllianceMember newLeader = Members.FirstOrDefault(m => m.Id != member.Id);
 					if (newLeader != null)
 					{
 						Player player = await newLeader.GetPlayerAsync();
 
-						newLeader.Role = (int)Role.Leader;
-						player.Home.AllianceInfo.Role = (int)Role.Leader;
+						newLeader.Role = (int)AllianceRoleType.LEADER;
+						player.Home.AllianceInfo.Role = (int)AllianceRoleType.LEADER;
 
 						player.Save();
 					}
@@ -302,7 +295,7 @@ namespace ClashofClans.Logic.Clan
 			await AllianceDb.SaveAsync(this);
 
 			st.Stop();
-			Logger.Log($"Alliance {Id} saved in {st.ElapsedMilliseconds}ms.", GetType(), Logger.ErrorLevel.Debug);
+			Logger.Log($"Alliance {Id} saved in {st.ElapsedMilliseconds}ms.", GetType(), LogErrorType.DEBUG);
 #else
             //await Redis.CacheAsync(this);
             await AllianceDb.SaveAsync(this);

@@ -5,7 +5,6 @@ using System.Timers;
 
 using ClashofClans.Database;
 using ClashofClans.Files;
-using ClashofClans.Files.CsvHelpers;
 using ClashofClans.Files.Logic;
 using ClashofClans.Logic;
 using ClashofClans.Logic.Clan;
@@ -28,8 +27,8 @@ namespace ClashofClans.Core.Leaderboard
 			_timer.Elapsed += Update;
 			_timer.Start();
 
-			foreach (Data regions in Csv.Tables.Get(Csv.Files.Regions).GetDatas())
-				LocalPlayerRanking.Add(((Regions)regions).Name, new List<Player>(200));
+			foreach (LogicData regions in Csv.Tables.Get(LogicDataType.REGION).GetDatas())
+				LocalPlayerRanking.Add(((LogicRegionData)regions).Name, new List<Player>(200));
 
 			Update(null, null);
 		}
@@ -46,7 +45,7 @@ namespace ClashofClans.Core.Leaderboard
 				}
 				catch (Exception exception)
 				{
-					Logger.Log($"Error while updating leaderboads {exception}", GetType(), Logger.ErrorLevel.Error);
+					Logger.Log($"Error while updating leaderboads {exception}", GetType(), LogErrorType.ERROR);
 				}
 			});
 		}
@@ -86,7 +85,7 @@ namespace ClashofClans.Core.Leaderboard
 				}
 				catch (Exception exception)
 				{
-					Logger.Log($"Error while updating leaderboads {exception}", GetType(), Logger.ErrorLevel.Error);
+					Logger.Log($"Error while updating leaderboads {exception}", GetType(), LogErrorType.ERROR);
 				}
 			});
 		}

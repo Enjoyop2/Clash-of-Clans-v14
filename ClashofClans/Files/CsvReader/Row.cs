@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-using ClashofClans.Files.CsvHelpers;
+using ClashofClans.Files.Logic;
 
 namespace ClashofClans.Files.CsvReader
 {
@@ -21,7 +21,7 @@ namespace ClashofClans.Files.CsvReader
 
 		public int Offset => RowStart;
 
-		public void LoadData(Data data)
+		public void LoadData(LogicData data)
 		{
 			foreach (PropertyInfo property in data.GetType().GetProperties(BindingFlags.Instance |
 																  BindingFlags.NonPublic |
@@ -85,10 +85,10 @@ namespace ClashofClans.Files.CsvReader
 
 							property.SetValue(data, newList);
 						}
-						else if (property.PropertyType == typeof(Data) ||
-								 property.PropertyType.BaseType == typeof(Data))
+						else if (property.PropertyType == typeof(LogicData) ||
+								 property.PropertyType.BaseType == typeof(LogicData))
 						{
-							Data pData = (Data)Activator.CreateInstance(property.PropertyType);
+							LogicData pData = (LogicData)Activator.CreateInstance(property.PropertyType);
 							LoadData(pData);
 							property.SetValue(data, pData);
 						}
